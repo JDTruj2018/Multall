@@ -441,7 +441,7 @@ def camber_mods(camber):
 							valx = raw_input('New X-Location of Control Point:\n')
 
 							for sec in range(0, len(SECTIONS)):
-								idx = counter*CONTROL_POINTS*len(SECTIONS) + (point+1)*sec*CONTROL_POINTS + 1
+								idx =  counter*CONTROL_POINTS*len(SECTIONS) + sec*CONTROL_POINTS + point + 1
 								camber[idx][2] = valx.strip()
 				
 					changec = raw_input('Change Camber Angle of Control Point ' + str(point + 1) + '?(y/n)')
@@ -450,7 +450,7 @@ def camber_mods(camber):
 						valc = raw_input('Change Camber Angle by X Degrees:\n')
 
 						for sec in range(0, len(SECTIONS)):
-							idx = counter*CONTROL_POINTS*len(SECTIONS) + (point+1)*sec*CONTROL_POINTS + 1
+							idx = idx =  counter*CONTROL_POINTS*len(SECTIONS) + sec*CONTROL_POINTS + point + 1
 							camber[idx][3] = str(float(camber[idx][3]) + float(valc)).strip()
 
 				CURRENT_ROW += 1
@@ -471,7 +471,7 @@ def camber_mods(camber):
 
 							if changex == 'y' or changex == 'Y':
 								valx = raw_input('New X-Location of Control Point:\n')
-								idx = counter*CONTROL_POINTS*len(SECTIONS) + (point+1)*CURRENT_SECTION*CONTROL_POINTS + 1
+								idx = idx =  counter*CONTROL_POINTS*len(SECTIONS) + sec*CONTROL_POINTS + point + 1
 								camber[idx][2] = valx.strip()
 
 							elif changex == 'd' or changex == 'D':
@@ -482,7 +482,7 @@ def camber_mods(camber):
 
 						if changec == 'y' or changec == 'Y':
 							valc = raw_input('Change Camber Angle by X Degrees:\n')
-							idx = counter*CONTROL_POINTS*len(SECTIONS) + (point+1)*CURRENT_SECTION*CONTROL_POINTS + 1
+							idx = idx =  counter*CONTROL_POINTS*len(SECTIONS) + sec*CONTROL_POINTS + point + 1
 							camber[idx][3] = str(float(camber[idx][3]) + float(valc)).strip()
 
 						elif changec == 'd' or changec == 'D':
