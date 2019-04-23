@@ -127,7 +127,7 @@ def main():
 
 	# Generate Figures
 	results_matlab(dir_new, MATLAB_FILE)
-	results_tecplot(dir_new, TECPLOT_FILE, MERIDIONAL_FILE)
+	# results_tecplot(dir_new, TECPLOT_FILE, MERIDIONAL_FILE)
 
 # Print Header
 def header():
@@ -694,7 +694,7 @@ def results_tecplot(dir_new, tecplotfile, meridionalfile):
 
 	execute_commands(commands)
 
-	move_files('*.png', figures)
+	move_files(home_dir + '*.png', figures)
 	
 # Change Current Working Directory to New Working Directory
 def change_wd(folder):
