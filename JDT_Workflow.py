@@ -236,7 +236,7 @@ def thickness_mods(thickness):
 
 	CURRENT_ROW = ROW_START
 
-	while CURRENT_ROW < ROW_END:
+	while CURRENT_ROW <= ROW_END:
 		print('Row ' + str(CURRENT_ROW))
 		rowchange = raw_input('Any thickness changes to Row ' + str(CURRENT_ROW) + '? (y/n)\n')
 
@@ -417,7 +417,7 @@ def camber_mods(camber):
 	CURRENT_ROW = ROW_START
 
 
-	while CURRENT_ROW < ROW_END:
+	while CURRENT_ROW <= ROW_END:
 		print('Row ' + str(CURRENT_ROW))
 
 
@@ -444,7 +444,7 @@ def camber_mods(camber):
 								idx = counter*CONTROL_POINTS*len(SECTIONS) + (point+1)*sec*CONTROL_POINTS + 1
 								camber[idx][2] = valx.strip()
 				
-					changec = raw_input('Change Camber Angle of Control Point ' + str(point + 1) + '?(y/n/d)')
+					changec = raw_input('Change Camber Angle of Control Point ' + str(point + 1) + '?(y/n)')
 
 					if changec == 'y' or changec == 'Y':
 						valc = raw_input('Change Camber Angle by X Degrees:\n')
