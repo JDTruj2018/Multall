@@ -321,6 +321,7 @@ def thickness_mods(thickness):
 
 				while CURRENT_SECTION < SECTION_END:
 					print('Row ' + str(CURRENT_ROW) + ', Section ' + str(CURRENT_SECTION))
+					sec = CURRENT_SECTION - SECTION_START
 
 					change_TKLE = raw_input('Change Leading Edge Thickness (TKLE)? (y/n/d)')
 
@@ -463,7 +464,7 @@ def camber_mods(camber):
 
 				while CURRENT_SECTION < SECTION_END:
 					print('Row ' + str(CURRENT_ROW) + ', Section ' + str(CURRENT_SECTION))
-
+					sec = CURRENT_SECTION - SECTION_START
 					for point in range(0, CONTROL_POINTS):
 
 						if point != 0 and point != CONTROL_POINTS - 1:
