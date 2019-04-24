@@ -703,9 +703,12 @@ def results_compare(dir_current, dir_modified):
 	f_current = dir_current + '/matlab.dat'
 	f_modified = dir_modified + '/matlab.dat'
 
-	command = ['matlab -nodesktop -nosplash -r "addpath ' + MATLAB + '; DE_compare_two_op ' + f_current + ' ' + f_modified + '; Design_Study ' + dir_modified + '; exit;"']
+	command = ['matlab -nodesktop -nosplash -r "addpath ' + MATLAB + '; DE_compare_two_op ' + f_current + ' ' + f_modified + '; Design_Study ' + dir_modified + '; exit;"',
+		   'mkdir ' + figures + '/Comparison']
 
 	execute_commands(command)
+
+	move_files(home_dir + '*.png', figures + '/Comparison')
 	
 # Change Current Working Directory to New Working Directory
 def change_wd(folder):
