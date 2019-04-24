@@ -13,6 +13,7 @@ import csv
 
 # Global Variables and Paths
 home_dir           = '/mnt/clifford/jereddt/Research/01_Workflow/'
+dir_current        = home_dir + '02_Runs/Denis_Design/J_03-05-19/06_N100_R180/pb_142500'
 stagen_original    = home_dir + 'stagen_original.dat'
 geometry_original  = home_dir + 'Input.csv'
 geometry_new       = 'Geo_Output.csv'
@@ -128,6 +129,7 @@ def main():
 	# Generate Figures
 	results_matlab(dir_new, MATLAB_FILE)
 	# results_tecplot(dir_new, TECPLOT_FILE, MERIDIONAL_FILE)
+	restuls_compare(dir_current, dir_new)
 
 # Print Header
 def header():
@@ -696,6 +698,14 @@ def results_tecplot(dir_new, tecplotfile, meridionalfile):
 	execute_commands(commands)
 
 	move_files(home_dir + '*.png', figures)
+
+def results_compare(dir_current, dir_modified):
+	f_current = dir_current + '/matlab.dat'
+	f_modified = dir_modified + '/matlab.dat'
+
+	command = ['matlab -nodesktop -nosplash -r "addpath ' + MATLAB + '; DE_compare_two_op ' + f_current + ' ' + f_modified + '; Design_Study ' + dir_modified + '; exit;"']
+
+	execute_commands(command)
 	
 # Change Current Working Directory to New Working Directory
 def change_wd(folder):
