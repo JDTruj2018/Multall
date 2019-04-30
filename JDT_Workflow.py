@@ -83,12 +83,12 @@ def main():
 	dir_new, stagen_new, reynolds, pback = user_input()
 
 	# Make New Directory and Copy Necessary Files
-	commands = ['mkdir ' + dir_new                                                             ,
+	commands = ['mkdir ' + dir_new                                                                 ,
                     'mkdir ' + dir_new                + '/' + figures                              ,
                     'cp '    + stagen_original        + ' ' + stagen_new                           ,
                     'cp '    + MEANGEN_EXE            + ' ' + dir_new    + '/' + MEANGEN           ,
-		    'cp '    + STAGEN_EXE             + ' ' + dir_new    + '/' + STAGEN            ,
-		    'cp '    + MULTALL_EXE            + ' ' + dir_new    + '/' + MULTALL           ,
+		            'cp '    + STAGEN_EXE             + ' ' + dir_new    + '/' + STAGEN            ,
+		            'cp '    + MULTALL_EXE            + ' ' + dir_new    + '/' + MULTALL           ,
                     'cp '    + CONVERT_TO_MATLAB_EXE  + ' ' + dir_new    + '/' + CONVERT_TO_MATLAB ,
                     'cp '    + CONVERT_TO_TECPLOT_EXE + ' ' + dir_new    + '/' + CONVERT_TO_TECPLOT,]
 
@@ -128,8 +128,8 @@ def main():
 
 	# Generate Figures
 	results_matlab(dir_new, MATLAB_FILE)
-	# results_tecplot(dir_new, TECPLOT_FILE, MERIDIONAL_FILE)
-	restuls_compare(dir_current, dir_new)
+	results_tecplot(dir_new, TECPLOT_FILE, MERIDIONAL_FILE)
+	results_compare(dir_current, dir_new)
 
 # Print Header
 def header():
@@ -321,7 +321,7 @@ def thickness_mods(thickness):
 
 				CURRENT_SECTION = SECTION_START
 
-				while CURRENT_SECTION < SECTION_END:
+				while CURRENT_SECTION <= SECTION_END:
 					print('Row ' + str(CURRENT_ROW) + ', Section ' + str(CURRENT_SECTION))
 					sec = CURRENT_SECTION - SECTION_START
 
@@ -464,7 +464,7 @@ def camber_mods(camber):
 
 				CURRENT_SECTION = SECTION_START
 
-				while CURRENT_SECTION < SECTION_END:
+				while CURRENT_SECTION <= SECTION_END:
 					print('Row ' + str(CURRENT_ROW) + ', Section ' + str(CURRENT_SECTION))
 					sec = CURRENT_SECTION - SECTION_START
 					for point in range(0, CONTROL_POINTS):
@@ -699,6 +699,7 @@ def results_tecplot(dir_new, tecplotfile, meridionalfile):
 
 	move_files(home_dir + '*.png', figures)
 
+# Compare Modified Geometry Results to Current Geometry Results
 def results_compare(dir_current, dir_modified):
 	f_current = dir_current + '/matlab.dat'
 	f_modified = dir_modified + '/matlab.dat'
@@ -708,7 +709,7 @@ def results_compare(dir_current, dir_modified):
 
 	execute_commands(command)
 
-	move_files(home_dir + '*.png', figures + '/Comparison')
+	move_files('*.png', figures + '/Comparison')
 	
 # Change Current Working Directory to New Working Directory
 def change_wd(folder):
