@@ -129,7 +129,7 @@ def main():
 	# Generate Figures
 	results_matlab(dir_new, MATLAB_FILE)
 	# results_tecplot(dir_new, TECPLOT_FILE, MERIDIONAL_FILE)
-	restuls_compare(dir_current, dir_new)
+	results_compare(dir_current, dir_new)
 
 # Print Header
 def header():
@@ -321,7 +321,7 @@ def thickness_mods(thickness):
 
 				CURRENT_SECTION = SECTION_START
 
-				while CURRENT_SECTION < SECTION_END:
+				while CURRENT_SECTION <= SECTION_END:
 					print('Row ' + str(CURRENT_ROW) + ', Section ' + str(CURRENT_SECTION))
 					sec = CURRENT_SECTION - SECTION_START
 
@@ -464,7 +464,7 @@ def camber_mods(camber):
 
 				CURRENT_SECTION = SECTION_START
 
-				while CURRENT_SECTION < SECTION_END:
+				while CURRENT_SECTION <= SECTION_END:
 					print('Row ' + str(CURRENT_ROW) + ', Section ' + str(CURRENT_SECTION))
 					sec = CURRENT_SECTION - SECTION_START
 					for point in range(0, CONTROL_POINTS):
