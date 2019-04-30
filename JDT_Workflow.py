@@ -708,7 +708,7 @@ def results_compare(dir_current, dir_modified):
 
 	execute_commands(command)
 
-	move_files(home_dir + '*.png', figures + '/Comparison')
+	move_files('*.png', figures + '/Comparison')
 	
 # Change Current Working Directory to New Working Directory
 def change_wd(folder):
