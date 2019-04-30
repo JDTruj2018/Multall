@@ -128,7 +128,11 @@ def main():
 
 	# Generate Figures
 	results_matlab(dir_new, MATLAB_FILE)
+<<<<<<< HEAD
 	results_tecplot(dir_new, TECPLOT_FILE, MERIDIONAL_FILE)
+=======
+	# results_tecplot(dir_new, TECPLOT_FILE, MERIDIONAL_FILE)
+>>>>>>> c22b3c18b1cc1774de9b37b973c5e7d0a24630da
 	results_compare(dir_current, dir_new)
 
 # Print Header
