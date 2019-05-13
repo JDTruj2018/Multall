@@ -64,6 +64,8 @@ xstator                = MATLAB + 'res/x_frac_stator.csv'
 PW_Mach                = MATLAB + 'res/PW_Mach.csv'
 Mach_PS                = 'MACH_PS.dat'
 Mach_SS                = 'MACH_SS.dat'
+CP_PS                  = 'CP_PS.dat'
+CP_SS                  = 'CP_SS.dat'
 
 # Run Variables
 REYNOLDS               = 180000
@@ -83,12 +85,12 @@ def main():
 	dir_new, stagen_new, reynolds, pback = user_input()
 
 	# Make New Directory and Copy Necessary Files
-	commands = ['mkdir ' + dir_new                                                                 ,
+	commands = ['mkdir ' + dir_new                                                             ,
                     'mkdir ' + dir_new                + '/' + figures                              ,
                     'cp '    + stagen_original        + ' ' + stagen_new                           ,
                     'cp '    + MEANGEN_EXE            + ' ' + dir_new    + '/' + MEANGEN           ,
-		            'cp '    + STAGEN_EXE             + ' ' + dir_new    + '/' + STAGEN            ,
-		            'cp '    + MULTALL_EXE            + ' ' + dir_new    + '/' + MULTALL           ,
+		    'cp '    + STAGEN_EXE             + ' ' + dir_new    + '/' + STAGEN            ,
+		    'cp '    + MULTALL_EXE            + ' ' + dir_new    + '/' + MULTALL           ,
                     'cp '    + CONVERT_TO_MATLAB_EXE  + ' ' + dir_new    + '/' + CONVERT_TO_MATLAB ,
                     'cp '    + CONVERT_TO_TECPLOT_EXE + ' ' + dir_new    + '/' + CONVERT_TO_TECPLOT,]
 
@@ -675,11 +677,13 @@ def generate_tecplot():
 def results_matlab(dir_new, mdatafile):
 	mdatafile = dir_new + '/' + mdatafile
 
-	pside = dir_new + '/' + Mach_PS
-	sside = dir_new + '/' + Mach_SS
+	pside   = dir_new + '/' + Mach_PS
+	sside   = dir_new + '/' + Mach_SS
+	cppside = dir_new + '/' + CP_PS
+	cpsside = dir_new + '/' + CP_SS
 
 	DE_compare_PW = mdatafile + " " + dppop + " " + angles + " " + dfactor + " " + pwstag + " " + pstagold + " " + tstagold + " " + xrotor + " " + xstator
-	DE_plot_Mach = pside + " " + sside + " " + xrotor + " " + xstator + " " + PW_Mach
+	DE_plot_Mach = pside + " " + sside + " " + xrotor + " " + xstator + " " + PW_Mach + " " + cppside + " " + cpsside
 
 	command = ['matlab -nodesktop -nosplash -r "addpath ' + MATLAB + '; DE_pitchwise_avg_1d ' + mdatafile + '; DE_compare_PW ' + DE_compare_PW + '; DE_compare_Mach ' + mdatafile + '; DE_plot_Mach ' + DE_plot_Mach + '; exit;"']
 
@@ -699,7 +703,6 @@ def results_tecplot(dir_new, tecplotfile, meridionalfile):
 
 	move_files(home_dir + '*.png', figures)
 
-# Compare Modified Geometry Results to Current Geometry Results
 def results_compare(dir_current, dir_modified):
 	f_current = dir_current + '/matlab.dat'
 	f_modified = dir_modified + '/matlab.dat'
