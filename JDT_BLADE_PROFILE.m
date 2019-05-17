@@ -1,16 +1,14 @@
-function JDT_BLADE_PROFILE(grid2dfile, delimiterIn)
+function [Igv, Rotor, Stator, Chords, AxChords, Staggers, ARs, ARXs, Gaps, MidSpan, SpanWise, Average, N_SEC] = JDT_BLADE_PROFILE(Solidities, RTIP, RHUB, grid2dfile, delimiterIn)
 
     RAW_INPUT = importdata(grid2dfile, delimiterIn);
     
-    RTIP = 0.2119;
-    RHUB = 0.1845;
     RMID = (RTIP + RHUB) / 2;
     HUB_TIP_RATIO = RHUB / RTIP;
     SPAN = RTIP - RHUB;
     
-    SOLIDITY_IGV = 1.2;
-    SOLIDITY_ROTOR = 1.2;
-    SOLIDITY_STATOR = 1.2;
+    SOLIDITY_IGV = Solidities(1);
+    SOLIDITY_ROTOR = Solidities(2);
+    SOLIDITY_STATOR = Solidities(3);
     
     J_TOTAL = 433;
     J_IGV = 146; J_ROTOR = 136; J_STATOR = 151;
@@ -26,7 +24,15 @@ function JDT_BLADE_PROFILE(grid2dfile, delimiterIn)
     
     X_IGV_DATA  = zeros(N_SEC, J_IGV);
     Y_IGV_DATA  = zeros(N_SEC, J_IGV);
-    T_IGV_KDATA = zeros(N_SEC, J_IGV);
+    TK_IGV_DATA = zeros(N_SEC, J_IGV);
+    
+    X_ROTOR_DATA = zeros(N_SEC, J_ROTOR);
+    Y_ROTOR_DATA = zeros(N_SEC, J_ROTOR);
+    TK_ROTOR_DATA = zeros(N_SEC, J_ROTOR);
+    
+    X_STATOR_DATA = zeros(N_SEC, J_STATOR);
+    Y_STATOR_DATA = zeros(N_SEC, J_STATOR);
+    TK_STATOR_DATA = zeros(N_SEC, J_STATOR);
     
     for ii = 1:N_SEC
         F_IGV = N_SEC * J_IGV;
@@ -53,6 +59,13 @@ function JDT_BLADE_PROFILE(grid2dfile, delimiterIn)
         Y_STATOR_DATA(ii, :)  = RAW_INPUT(START_STATOR:END_STATOR, 3);
         TK_STATOR_DATA(ii, :) = RAW_INPUT(START_STATOR:END_STATOR, 4);
     end
+    
+    IGV_CHORD = zeros(N_SEC, 1);
+    ROTOR_CHORD = zeros(N_SEC, 1);
+    STATOR_CHORD = zeros(N_SEC, 1);
+    X_IGV_AX = zeros(N_SEC, 1);
+    X_ROTOR_AX = zeros(N_SEC, 1);
+    X_STATOR_AX = zeros(N_SEC, 1);
     
     for SEC = 1:N_SEC
         IGV1 = [X_IGV_DATA(SEC, J_IGV_LE); Y_IGV_DATA(SEC, J_IGV_LE)];
@@ -202,6 +215,9 @@ function JDT_BLADE_PROFILE(grid2dfile, delimiterIn)
     AVG_N_STATOR = round(SOLIDITY_STATOR * CIRC_MID / AVG_STATOR_CHORD, 0);
     
     %% Print Output
+    fprintf('RTip: %.4f m\tRHub: %.4f m\tRMid: %.4f m\tSpan: %.3f m\tHub-to-Tip Ratio: %.3f\n', RTIP, RHUB, RMID, SPAN, HUB_TIP_RATIO);
+    fprintf('Gap IGV - Rotor: %.4f m\tGap Rotor - Stator: %.4f m\n\n', ROTOR_GAP, STATOR_GAP);
+    
     fprintf('Mid-Span Approach:\n');
     fprintf('IGV    Blades: %.0f\tIGV    Chord: %.4f m\tIGV    Axial Chord: %.4f m\tIGV    Stagger: %.2f deg\tIGV    AR: %.2f\tIGV    AR(AX): %.2f\n', MSP_N_IGV, MSP_IGV_CHORD, MSP_X_IGV_AX, MSP_STAGGER_IGV, MSP_AR_IGV_CHORD, MSP_AR_X_IGV_AX);
     fprintf('ROTOR  Blades: %.0f\tROTOR  Chord: %.4f m\tROTOR  Axial Chord: %.4f m\tROTOR  Stagger: %.2f deg\tROTOR  AR: %.2f\tROTOR  AR(AX): %.2f\n', MSP_N_ROTOR, MSP_ROTOR_CHORD, MSP_X_ROTOR_AX, MSP_STAGGER_ROTOR, MSP_AR_ROTOR_CHORD, MSP_AR_X_ROTOR_AX);
@@ -217,26 +233,55 @@ function JDT_BLADE_PROFILE(grid2dfile, delimiterIn)
     fprintf('ROTOR  Blades: %.0f\tROTOR  Chord: %.4f m\tROTOR  Axial Chord: %.4f m\tROTOR  Stagger: %.2f deg\tROTOR  AR: %.2f\tROTOR  AR(AX): %.2f\n', AVG_N_ROTOR, AVG_ROTOR_CHORD, AVG_X_ROTOR_AX, AVG_STAGGER_ROTOR, AVG_AR_ROTOR_CHORD, AVG_AR_X_ROTOR_AX);
     fprintf('STATOR Blades: %.0f\tSTATOR Chord: %.4f m\tSTATOR Axial Chord: %.4f m\tSTATOR Stagger: %.2f deg\tSTATOR AR: %.2f\tSTATOR AR(AX): %.2f\n', AVG_N_STATOR, AVG_STATOR_CHORD, AVG_X_STATOR_AX, AVG_STAGGER_STATOR, AVG_AR_STATOR_CHORD, AVG_AR_X_STATOR_AX);
     
-    %% Plotting Section Profiles
+    %% Z Coordinates
     Z = RHUB + SEC_Z .* SPAN;
     Z_IGV    = repmat(Z, 1, J_IGV_TE - J_IGV_LE + 1);
     Z_ROTOR  = repmat(Z, 1, J_ROTOR_TE - J_ROTOR_LE + 1);
     Z_STATOR = repmat(Z, 1, J_STATOR_TE - J_STATOR_LE + 1);
     
-    for SEC = 1:9
-        hold on;
-        plot3(X_IGV_DATA(SEC, J_IGV_LE:J_IGV_TE), Y_IGV_DATA(SEC, J_IGV_LE:J_IGV_TE) - TK_IGV_DATA(SEC, J_IGV_LE:J_IGV_TE), Z_IGV(SEC, :));
-        plot3(X_IGV_DATA(SEC, J_IGV_LE:J_IGV_TE), Y_IGV_DATA(SEC, J_IGV_LE:J_IGV_TE) - 0.5 .* TK_IGV_DATA(SEC, J_IGV_LE:J_IGV_TE), Z_IGV(SEC, :));
-        plot3(X_IGV_DATA(SEC, J_IGV_LE:J_IGV_TE), Y_IGV_DATA(SEC, J_IGV_LE:J_IGV_TE), Z_IGV(SEC, :));
-        
-        plot3(X_ROTOR_DATA(SEC, J_ROTOR_LE:J_ROTOR_TE), Y_ROTOR_DATA(SEC, J_ROTOR_LE:J_ROTOR_TE) - TK_ROTOR_DATA(SEC, J_ROTOR_LE:J_ROTOR_TE), Z_ROTOR(SEC, :));
-        plot3(X_ROTOR_DATA(SEC, J_ROTOR_LE:J_ROTOR_TE), Y_ROTOR_DATA(SEC, J_ROTOR_LE:J_ROTOR_TE) - 0.5 .* TK_ROTOR_DATA(SEC, J_ROTOR_LE:J_ROTOR_TE), Z_ROTOR(SEC, :));
-        plot3(X_ROTOR_DATA(SEC, J_ROTOR_LE:J_ROTOR_TE), Y_ROTOR_DATA(SEC, J_ROTOR_LE:J_ROTOR_TE), Z_ROTOR(SEC, :));
-        
-        plot3(X_STATOR_DATA(SEC, J_STATOR_LE:J_STATOR_TE), Y_STATOR_DATA(SEC, J_STATOR_LE:J_ROTOR_TE) - TK_STATOR_DATA(SEC, J_STATOR_LE:J_STATOR_TE), Z_STATOR(SEC, :));
-        plot3(X_STATOR_DATA(SEC, J_STATOR_LE:J_STATOR_TE), Y_STATOR_DATA(SEC, J_STATOR_LE:J_ROTOR_TE) - 0.5 .* TK_STATOR_DATA(SEC, J_STATOR_LE:J_STATOR_TE), Z_STATOR(SEC, :));
-        plot3(X_STATOR_DATA(SEC, J_STATOR_LE:J_STATOR_TE), Y_STATOR_DATA(SEC, J_STATOR_LE:J_ROTOR_TE), Z_STATOR(SEC, :));
-        
-        xlabel('x'); ylabel('y'); zlabel('z');
-    end
+    %% Return Data
+    Igv = {repmat(X_IGV_DATA(:, J_IGV_LE:J_IGV_TE), 3, 1), 
+        [Y_IGV_DATA(:, J_IGV_LE:J_IGV_TE) - TK_IGV_DATA(:, J_IGV_LE:J_IGV_TE);
+        Y_IGV_DATA(:, J_IGV_LE:J_IGV_TE) - 0.5 .* TK_IGV_DATA(:, J_IGV_LE:J_IGV_TE);
+        Y_IGV_DATA(:, J_IGV_LE:J_IGV_TE)], 
+        repmat(Z_IGV(:, :), 3, 1)};
+    
+     Rotor = {repmat(X_ROTOR_DATA(:, J_ROTOR_LE:J_ROTOR_TE), 3, 1), 
+        [Y_ROTOR_DATA(:, J_ROTOR_LE:J_ROTOR_TE) - TK_ROTOR_DATA(:, J_ROTOR_LE:J_ROTOR_TE);
+        Y_ROTOR_DATA(:, J_ROTOR_LE:J_ROTOR_TE) - 0.5 .* TK_ROTOR_DATA(:, J_ROTOR_LE:J_ROTOR_TE);
+        Y_ROTOR_DATA(:, J_ROTOR_LE:J_ROTOR_TE)], 
+        repmat(Z_ROTOR(:, :), 3, 1)};
+     
+     Stator = {repmat(X_STATOR_DATA(:, J_STATOR_LE:J_STATOR_TE), 3, 1), 
+        [Y_STATOR_DATA(:, J_STATOR_LE:J_STATOR_TE) - TK_STATOR_DATA(:, J_STATOR_LE:J_STATOR_TE);
+        Y_STATOR_DATA(:, J_STATOR_LE:J_STATOR_TE) - 0.5 .* TK_STATOR_DATA(:, J_STATOR_LE:J_STATOR_TE);
+        Y_STATOR_DATA(:, J_STATOR_LE:J_STATOR_TE)], 
+        repmat(Z_STATOR(:, :), 3, 1)};
+    
+    Chords = [IGV_CHORD'; ROTOR_CHORD'; STATOR_CHORD'];
+     
+    AxChords = [X_IGV_AX'; X_ROTOR_AX'; X_STATOR_AX'];
+    
+    Staggers = [STAGGER_IGV'; STAGGER_ROTOR'; STAGGER_STATOR'];
+    
+    ARs = [AR_IGV_CHORD'; AR_ROTOR_CHORD'; AR_STATOR_CHORD'];
+    
+    ARXs = [AR_X_IGV_AX'; AR_X_ROTOR_AX'; AR_X_STATOR_AX'];
+    
+    Gaps = [ROTOR_GAP; STATOR_GAP];
+    
+    MidSpan = [MSP_N_IGV, MSP_IGV_CHORD, MSP_X_IGV_AX, MSP_STAGGER_IGV, MSP_AR_IGV_CHORD, MSP_AR_X_IGV_AX;
+        MSP_N_ROTOR, MSP_ROTOR_CHORD, MSP_X_ROTOR_AX, MSP_STAGGER_ROTOR, MSP_AR_ROTOR_CHORD, MSP_AR_X_ROTOR_AX;
+        MSP_N_STATOR, MSP_STATOR_CHORD, MSP_X_STATOR_AX, MSP_STAGGER_STATOR, MSP_AR_STATOR_CHORD, MSP_AR_X_STATOR_AX;    
+    ];
+
+    SpanWise = [SPW_N_IGV, SPW_IGV_CHORD, SPW_X_IGV_AX, SPW_STAGGER_IGV, SPW_AR_IGV_CHORD, SPW_AR_X_IGV_AX;
+        SPW_N_ROTOR, SPW_ROTOR_CHORD, SPW_X_ROTOR_AX, SPW_STAGGER_ROTOR, SPW_AR_ROTOR_CHORD, SPW_AR_X_ROTOR_AX;
+        SPW_N_STATOR, SPW_STATOR_CHORD, SPW_X_STATOR_AX, SPW_STAGGER_STATOR, SPW_AR_STATOR_CHORD, SPW_AR_X_STATOR_AX;
+    ];
+
+    Average = [AVG_N_IGV, AVG_IGV_CHORD, AVG_X_IGV_AX, AVG_STAGGER_IGV, AVG_AR_IGV_CHORD, AVG_AR_X_IGV_AX;
+        AVG_N_ROTOR, AVG_ROTOR_CHORD, AVG_X_ROTOR_AX, AVG_STAGGER_ROTOR, AVG_AR_ROTOR_CHORD, AVG_AR_X_ROTOR_AX;
+        AVG_N_STATOR, AVG_STATOR_CHORD, AVG_X_STATOR_AX, AVG_STAGGER_STATOR, AVG_AR_STATOR_CHORD, AVG_AR_X_STATOR_AX;
+        ];
 end
