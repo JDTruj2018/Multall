@@ -557,7 +557,7 @@ def new_stagen(fname, thickness, camber):
 		# Update Thickness Values
 		for j in range(0, len(thickness)):
 			if thickness[j][0] == ROW_NUMBER and thickness[j][1] == SECTION_NUMBER:
-				lines[ROW_IDX[i]+11] = '    ' + thickness[j][2] + '    ' + thickness[j][3] + '    ' + thickness[j][4] + '    ' + thickness[j][5] + '    ' + thickness[j][6] + '    ' + thickness[j][7] + '    ' + thickness[j][8] + '     ' + 'BLADE PROFILE SPECFICATION\n'
+				lines[ROW_IDX[i]+11] = '    ' + thickness[j][2] + '    ' + thickness[j][3] + '    ' + thickness[j][4] + '    ' + thickness[j][5] + '    ' + thickness[j][6] + '    ' + thickness[j][7] + '    ' + thickness[j][8] + '     ' + 'BLADE PROFILE SPECIFICATION\n'
 	
 	# Write Geometry to New Stagen File
 	f = open(fname, 'w')
