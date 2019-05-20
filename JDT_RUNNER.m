@@ -8,7 +8,7 @@ RTIP = 0.2119;     MIT_RTIP = 0.295;
 RHUB = 0.1845;     MIT_RHUB = 0.2225;
 Solidities = [1.20, 1.20, 1.20];
 
-grid2dfile = '/mnt/clifford/jereddt/Research/01_Workflow/02_Runs/New_Design/grid2d.dat';
+grid2dfile = '/mnt/clifford/jereddt/Research/01_Workflow/02_Runs/Final_Run/grid2d.dat';
 delimiterIn = ' ';
 
 [Igv, Rotor, Stator, Chords, AxChords, Staggers, ARs, ARXs, Gaps, ...

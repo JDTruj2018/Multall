@@ -219,19 +219,19 @@ function [Igv, Rotor, Stator, Chords, AxChords, Staggers, ARs, ARXs, Gaps, MidSp
     fprintf('Gap IGV - Rotor: %.4f m\tGap Rotor - Stator: %.4f m\n\n', ROTOR_GAP, STATOR_GAP);
     
     fprintf('Mid-Span Approach:\n');
-    fprintf('IGV    Blades: %.0f\tIGV    Chord: %.4f m\tIGV    Axial Chord: %.4f m\tIGV    Stagger: %.2f deg\tIGV    AR: %.2f\tIGV    AR(AX): %.2f\n', MSP_N_IGV, MSP_IGV_CHORD, MSP_X_IGV_AX, MSP_STAGGER_IGV, MSP_AR_IGV_CHORD, MSP_AR_X_IGV_AX);
-    fprintf('ROTOR  Blades: %.0f\tROTOR  Chord: %.4f m\tROTOR  Axial Chord: %.4f m\tROTOR  Stagger: %.2f deg\tROTOR  AR: %.2f\tROTOR  AR(AX): %.2f\n', MSP_N_ROTOR, MSP_ROTOR_CHORD, MSP_X_ROTOR_AX, MSP_STAGGER_ROTOR, MSP_AR_ROTOR_CHORD, MSP_AR_X_ROTOR_AX);
-    fprintf('STATOR Blades: %.0f\tSTATOR Chord: %.4f m\tSTATOR Axial Chord: %.4f m\tSTATOR Stagger: %.2f deg\tSTATOR AR: %.2f\tSTATOR AR(AX): %.2f\n\n', MSP_N_STATOR, MSP_STATOR_CHORD, MSP_X_STATOR_AX, MSP_STAGGER_STATOR, MSP_AR_STATOR_CHORD, MSP_AR_X_STATOR_AX);
+    fprintf('IGV    Blades: %.0f\tIGV    Chord: %.4f m\tIGV    Axial Chord: %.4f m\tIGV    Stagger: %.3f deg\tIGV    AR: %.3f\tIGV    AR(AX): %.3f\n', MSP_N_IGV, MSP_IGV_CHORD, MSP_X_IGV_AX, MSP_STAGGER_IGV, MSP_AR_IGV_CHORD, MSP_AR_X_IGV_AX);
+    fprintf('ROTOR  Blades: %.0f\tROTOR  Chord: %.4f m\tROTOR  Axial Chord: %.4f m\tROTOR  Stagger: %.3f deg\tROTOR  AR: %.3f\tROTOR  AR(AX): %.3f\n', MSP_N_ROTOR, MSP_ROTOR_CHORD, MSP_X_ROTOR_AX, MSP_STAGGER_ROTOR, MSP_AR_ROTOR_CHORD, MSP_AR_X_ROTOR_AX);
+    fprintf('STATOR Blades: %.0f\tSTATOR Chord: %.4f m\tSTATOR Axial Chord: %.4f m\tSTATOR Stagger: %.3f deg\tSTATOR AR: %.3f\tSTATOR AR(AX): %.3f\n\n', MSP_N_STATOR, MSP_STATOR_CHORD, MSP_X_STATOR_AX, MSP_STAGGER_STATOR, MSP_AR_STATOR_CHORD, MSP_AR_X_STATOR_AX);
     
     fprintf('Span-Wise Average Approach:\n');
-    fprintf('IGV    Blades: %.0f\tIGV    Chord: %.4f m\tIGV    Axial Chord: %.4f m\tIGV    Stagger: %.2f deg\tIGV    AR: %.2f\tIGV    AR(AX): %.2f\n', SPW_N_IGV, SPW_IGV_CHORD, SPW_X_IGV_AX, SPW_STAGGER_IGV, SPW_AR_IGV_CHORD, SPW_AR_X_IGV_AX);
-    fprintf('ROTOR  Blades: %.0f\tROTOR  Chord: %.4f m\tROTOR  Axial Chord: %.4f m\tROTOR  Stagger: %.2f deg\tROTOR  AR: %.2f\tROTOR  AR(AX): %.2f\n', SPW_N_ROTOR, SPW_ROTOR_CHORD, SPW_X_ROTOR_AX, SPW_STAGGER_ROTOR, SPW_AR_ROTOR_CHORD, SPW_AR_X_ROTOR_AX);
-    fprintf('STATOR Blades: %.0f\tSTATOR Chord: %.4f m\tSTATOR Axial Chord: %.4f m\tSTATOR Stagger: %.2f deg\tSTATOR AR: %.2f\tSTATOR AR(AX): %.2f\n\n', SPW_N_STATOR, SPW_STATOR_CHORD, SPW_X_STATOR_AX, SPW_STAGGER_STATOR, SPW_AR_STATOR_CHORD, SPW_AR_X_STATOR_AX);
+    fprintf('IGV    Blades: %.0f\tIGV    Chord: %.4f m\tIGV    Axial Chord: %.4f m\tIGV    Stagger: %.3f deg\tIGV    AR: %.3f\tIGV    AR(AX): %.3f\n', SPW_N_IGV, SPW_IGV_CHORD, SPW_X_IGV_AX, SPW_STAGGER_IGV, SPW_AR_IGV_CHORD, SPW_AR_X_IGV_AX);
+    fprintf('ROTOR  Blades: %.0f\tROTOR  Chord: %.4f m\tROTOR  Axial Chord: %.4f m\tROTOR  Stagger: %.3f deg\tROTOR  AR: %.3f\tROTOR  AR(AX): %.3f\n', SPW_N_ROTOR, SPW_ROTOR_CHORD, SPW_X_ROTOR_AX, SPW_STAGGER_ROTOR, SPW_AR_ROTOR_CHORD, SPW_AR_X_ROTOR_AX);
+    fprintf('STATOR Blades: %.0f\tSTATOR Chord: %.4f m\tSTATOR Axial Chord: %.4f m\tSTATOR Stagger: %.3f deg\tSTATOR AR: %.3f\tSTATOR AR(AX): %.3f\n\n', SPW_N_STATOR, SPW_STATOR_CHORD, SPW_X_STATOR_AX, SPW_STAGGER_STATOR, SPW_AR_STATOR_CHORD, SPW_AR_X_STATOR_AX);
     
     fprintf('True Average Approach:\n');
-    fprintf('IGV    Blades: %.0f\tIGV    Chord: %.4f m\tIGV    Axial Chord: %.4f m\tIGV    Stagger: %.2f deg\tIGV    AR: %.2f\tIGV    AR(AX): %.2f\n', AVG_N_IGV, AVG_IGV_CHORD, AVG_X_IGV_AX, AVG_STAGGER_IGV, AVG_AR_IGV_CHORD, AVG_AR_X_IGV_AX);
-    fprintf('ROTOR  Blades: %.0f\tROTOR  Chord: %.4f m\tROTOR  Axial Chord: %.4f m\tROTOR  Stagger: %.2f deg\tROTOR  AR: %.2f\tROTOR  AR(AX): %.2f\n', AVG_N_ROTOR, AVG_ROTOR_CHORD, AVG_X_ROTOR_AX, AVG_STAGGER_ROTOR, AVG_AR_ROTOR_CHORD, AVG_AR_X_ROTOR_AX);
-    fprintf('STATOR Blades: %.0f\tSTATOR Chord: %.4f m\tSTATOR Axial Chord: %.4f m\tSTATOR Stagger: %.2f deg\tSTATOR AR: %.2f\tSTATOR AR(AX): %.2f\n', AVG_N_STATOR, AVG_STATOR_CHORD, AVG_X_STATOR_AX, AVG_STAGGER_STATOR, AVG_AR_STATOR_CHORD, AVG_AR_X_STATOR_AX);
+    fprintf('IGV    Blades: %.0f\tIGV    Chord: %.4f m\tIGV    Axial Chord: %.4f m\tIGV    Stagger: %.3f deg\tIGV    AR: %.3f\tIGV    AR(AX): %.3f\n', AVG_N_IGV, AVG_IGV_CHORD, AVG_X_IGV_AX, AVG_STAGGER_IGV, AVG_AR_IGV_CHORD, AVG_AR_X_IGV_AX);
+    fprintf('ROTOR  Blades: %.0f\tROTOR  Chord: %.4f m\tROTOR  Axial Chord: %.4f m\tROTOR  Stagger: %.3f deg\tROTOR  AR: %.3f\tROTOR  AR(AX): %.3f\n', AVG_N_ROTOR, AVG_ROTOR_CHORD, AVG_X_ROTOR_AX, AVG_STAGGER_ROTOR, AVG_AR_ROTOR_CHORD, AVG_AR_X_ROTOR_AX);
+    fprintf('STATOR Blades: %.0f\tSTATOR Chord: %.4f m\tSTATOR Axial Chord: %.4f m\tSTATOR Stagger: %.3f deg\tSTATOR AR: %.3f\tSTATOR AR(AX): %.3f\n', AVG_N_STATOR, AVG_STATOR_CHORD, AVG_X_STATOR_AX, AVG_STAGGER_STATOR, AVG_AR_STATOR_CHORD, AVG_AR_X_STATOR_AX);
     
     %% Z Coordinates
     Z = RHUB + SEC_Z .* SPAN;
