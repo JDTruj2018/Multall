@@ -14,8 +14,8 @@ function JDT_WRITE_BLADE_COORDINATES(Igv, Rotor, Stator, N_SEC, scaleflag, RPM)
         end
         
         fIGV = fopen(['Geometry-', num2str(RPM), '/igv-scaled.csv'], 'w');
-        fROTOR = fopen('Geometry-', num2str(RPM), '/rotor-scaled.csv', 'w');
-        fSTATOR = fopen('Geometry-', num2str(RPM), '/stator-scaled.csv', 'w');
+        fROTOR = fopen(['Geometry-', num2str(RPM), '/rotor-scaled.csv'], 'w');
+        fSTATOR = fopen(['Geometry-', num2str(RPM), '/stator-scaled.csv'], 'w');
         
     else
         fprintf('Error: Invalid Scale Flag');
